@@ -1,0 +1,44 @@
+# export.checkpoint overridden at CLI. AFTER export, copy processor_config.json
+# from the Cosmos-Embed1-224p snapshot in /hf_cache into the exported dir
+# (export omits it; the processor otherwise defaults to 448p and video
+# embedding crashes — verified in the HMDB experiment).
+results_dir: /results
+
+export:
+  checkpoint: null
+  mode: huggingface
+  hf_output_dir: /results/export_hf/cosmos_embed1_driving_hf
+  on_cpu: true
+
+model:
+  pretrained_model_path: /model/Cosmos-Embed1-224p
+  precision: fp32
+  fsdp_shard_size: 1
+  lora:
+    enabled: true
+    lora_rank: 8
+    lora_alpha: 16
+    lora_dropout: 0.1
+    bias: none
+    use_rslora: false
+    use_dora: false
+  input_hw: [224, 224]
+  network:
+    embed_dim: 256
+    num_query_tokens: 32
+    max_txt_len: 128
+    num_video_frames: 8
+    spatial_resolution: [224, 224]
+    temporal_encoding_type: neighboring_token_propagation
+    contrastive_type: clip
+    qformer_pretrain_ckpt: null
+    query_pooling_type: avg
+    pretrained_text_encoder: false
+    pretrained_visual_encoder: false
+    num_heldout_frames: 0
+    visual_encoder:
+      type: eva_vit_g
+      img_size: 224
+      pretrained: false
+      use_fp8: false
+      transformer_engine: false

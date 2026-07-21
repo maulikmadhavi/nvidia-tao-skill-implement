@@ -1,0 +1,30 @@
+{
+  "drinking": {
+    "caption": "the driver is drinking from a bottle or cup while driving",
+    "label": 0
+  },
+  "eating": {
+    "caption": "the driver is eating food while driving",
+    "label": 1
+  },
+  "interacting_with_phone": {
+    "caption": "the driver is looking at and operating a handheld mobile phone, texting or browsing, while driving",
+    "label": 2
+  },
+  "no_violation": {
+    "caption": "a person driving normally with both hands on the steering wheel, attentive and not distracted",
+    "label": 3
+  },
+  "reading_newspaper": {
+    "caption": "the driver is reading a newspaper or paper document while driving",
+    "label": 4
+  },
+  "talking_on_phone": {
+    "caption": "the driver is holding a phone to their ear and talking on a phone call while driving",
+    "label": 5
+  },
+  "working_on_laptop": {
+    "caption": "the driver is using a laptop computer while driving",
+    "label": 6
+  }
+}

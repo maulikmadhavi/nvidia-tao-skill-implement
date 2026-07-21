@@ -1,0 +1,23 @@
+{
+  "phase": "baseline",
+  "num_test_videos": 306,
+  "num_classes": 51,
+  "accuracy": 0.6568627450980392,
+  "precision_macro": 0.6482302011713776,
+  "recall_macro": 0.6568627450980392,
+  "f1_macro": 0.6240407612379931,
+  "precision_weighted": 0.6482302011713776,
+  "recall_weighted": 0.6568627450980392,
+  "f1_weighted": 0.624040761237993,
+  "v2t_recall@1": 0.6568627450980392,
+  "v2t_recall@3": 0.8300653594771242,
+  "v2t_recall@5": 0.8921568627450981,
+  "v2t_recall@10": 0.9477124183006536,
+  "t2v_recall@1": 0.8235294117647058,
+  "t2v_recall@5": 0.9215686274509803,
+  "t2v_recall@10": 0.9607843137254902,
+  "t2v_mAP": 0.7011155540115129,
+  "t2v_median_rank_first_relevant": 1.0,
+  "note_v2t": "video->text recall@k == top-k classification accuracy (one relevant prompt per video)",
+  "note_t2v": "text->video recall@k is multi-positive (6 relevant clips per class query)"
+}

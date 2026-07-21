@@ -1,0 +1,8 @@
+class,label,precision,recall,f1,support
+drinking,0,1.0000,1.0000,1.0000,10
+eating,1,1.0000,1.0000,1.0000,10
+interacting_with_phone,2,0.9091,1.0000,0.9524,10
+no_violation,3,0.9918,1.0000,0.9959,121
+reading_newspaper,4,1.0000,1.0000,1.0000,10
+talking_on_phone,5,1.0000,1.0000,1.0000,10
+working_on_laptop,6,1.0000,0.8000,0.8889,10

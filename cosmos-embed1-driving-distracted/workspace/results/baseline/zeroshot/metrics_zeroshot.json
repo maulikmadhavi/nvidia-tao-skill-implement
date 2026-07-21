@@ -1,0 +1,20 @@
+{
+  "phase": "baseline_zeroshot",
+  "split": "val",
+  "num_clips": 181,
+  "num_classes": 7,
+  "accuracy": 0.9447513812154696,
+  "precision_macro": 0.913044733044733,
+  "recall_macro": 0.8702479338842976,
+  "f1_macro": 0.8850137102337726,
+  "reference_accuracy_train": 0.9516574585635359,
+  "per_class_f1": {
+    "drinking": 0.9,
+    "eating": 0.9,
+    "interacting_with_phone": 0.8421052631578947,
+    "no_violation": 0.975609756097561,
+    "reading_newspaper": 1.0,
+    "talking_on_phone": 0.9523809523809523,
+    "working_on_laptop": 0.625
+  }
+}

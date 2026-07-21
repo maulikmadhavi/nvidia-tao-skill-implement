@@ -1,0 +1,33 @@
+# Data & model weights — never commit (regenerable / large)
+*.safetensors
+*.pth
+*.pt
+*.bin
+*.onnx
+*.msgpack
+*.ot
+*.h5
+*.npz
+*.tar
+*.tar.gz
+*.gz
+*.zip
+
+# Raw media
+*.mp4
+*.avi
+*.mkv
+*.mov
+
+# Heavy / runtime dirs
+**/workspace/model/
+**/workspace/data/
+**/workspace/hf_cache/
+**/bundle/
+**/__pycache__/
+*.pyc
+*.log
+
+# OS cruft
+.DS_Store
+Thumbs.db

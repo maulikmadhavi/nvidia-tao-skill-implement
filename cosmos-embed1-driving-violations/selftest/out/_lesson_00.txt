@@ -1,0 +1,8 @@
+file 'D:/tao-skill-bank/exp/cosmos-embed1-driving-violations/selftest/out/_norm/n_talk_0021.mp4'
+file 'D:/tao-skill-bank/exp/cosmos-embed1-driving-violations/selftest/out/_norm/n_pullup_0017.mp4'
+file 'D:/tao-skill-bank/exp/cosmos-embed1-driving-violations/selftest/out/_norm/n_talk_0002.mp4'
+file 'D:/tao-skill-bank/exp/cosmos-embed1-driving-violations/selftest/out/_norm/n_smoke_0007.mp4'
+file 'D:/tao-skill-bank/exp/cosmos-embed1-driving-violations/selftest/out/_norm/n_talk_0003.mp4'
+file 'D:/tao-skill-bank/exp/cosmos-embed1-driving-violations/selftest/out/_norm/n_drink_0002.mp4'
+file 'D:/tao-skill-bank/exp/cosmos-embed1-driving-violations/selftest/out/_norm/n_talk_0027.mp4'
+file 'D:/tao-skill-bank/exp/cosmos-embed1-driving-violations/selftest/out/_norm/n_walk_0012.mp4'

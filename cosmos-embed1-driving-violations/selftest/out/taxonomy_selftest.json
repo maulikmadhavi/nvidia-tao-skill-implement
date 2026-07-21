@@ -1,0 +1,34 @@
+[
+  {
+    "id": "smoking",
+    "caption": "a video of a person smoking",
+    "kind": "action",
+    "window": 3,
+    "threshold": 0.25,
+    "min_consec": 2
+  },
+  {
+    "id": "drinking",
+    "caption": "a video of a person drinking",
+    "kind": "action",
+    "window": 3,
+    "threshold": 0.25,
+    "min_consec": 2
+  },
+  {
+    "id": "pullups",
+    "caption": "a video of a person doing pull ups",
+    "kind": "action",
+    "window": 3,
+    "threshold": 0.25,
+    "min_consec": 2
+  },
+  {
+    "id": "no_violation",
+    "caption": "a video of a person walking",
+    "kind": "state",
+    "window": 5,
+    "threshold": 0.5,
+    "min_consec": 1
+  }
+]

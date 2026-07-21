@@ -1,0 +1,24 @@
+{
+  "phase": "linear_probe",
+  "best_C": 10.0,
+  "cv_folds": 5,
+  "num_train": 724,
+  "num_val": 181,
+  "val_accuracy": 0.988950276243094,
+  "val_precision_macro": 0.9858420268256334,
+  "val_recall_macro": 0.9714285714285714,
+  "val_f1_macro": 0.9767363735617705,
+  "zeroshot_val_accuracy": 0.9447513812154696,
+  "zeroshot_val_f1_macro": 0.8850137102337726,
+  "accuracy_lift": 0.04419889502762431,
+  "f1_macro_lift": 0.09172266332799783,
+  "per_class_f1": {
+    "drinking": 1.0,
+    "eating": 1.0,
+    "interacting_with_phone": 0.9523809523809523,
+    "no_violation": 0.9958847736625515,
+    "reading_newspaper": 1.0,
+    "talking_on_phone": 1.0,
+    "working_on_laptop": 0.8888888888888888
+  }
+}

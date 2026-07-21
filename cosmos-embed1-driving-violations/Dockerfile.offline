@@ -1,0 +1,20 @@
+# Derived TAO cosmos-embed image with every runtime pip dependency BAKED IN,
+# so the air-gapped server never needs internet or a pip preamble.
+#   build:  docker build -f Dockerfile.offline -t cosmos-embed-offline:7.0.1 .
+#   export: docker save -o bundle/cosmos-embed-offline.tar cosmos-embed-offline:7.0.1
+FROM nvcr.io/nvidia/tao/tao-toolkit:7.0.1-cosmos-embed
+
+# protobuf<7: wandb-import fix (SKILL.md pitfall); sklearn+matplotlib: metric scripts
+RUN python -m pip install --no-cache-dir "protobuf<7" scikit-learn matplotlib
+
+# Bake bert-base-uncased into the CLI's FIXED checkpoint path: the cosmos-embed1
+# vitcat resolver always looks in dist-packages/pretrained_checkpoints/ for the
+# Q-Former init and downloads there if missing — which fails on air-gapped hosts.
+RUN python -c "from huggingface_hub import snapshot_download; snapshot_download('google-bert/bert-base-uncased', local_dir='/usr/local/lib/python3.12/dist-packages/pretrained_checkpoints/google-bert/bert-base-uncased')"
+
+# offline-by-default: never touch huggingface.co at runtime
+ENV HF_HUB_OFFLINE=1 \
+    TRANSFORMERS_OFFLINE=1 \
+    HUGGINGFACE_HUB_CACHE=/hf_cache \
+    WANDB_DISABLED=true \
+    WANDB_MODE=disabled

@@ -1,0 +1,37 @@
+{
+  "drinking": {
+    "total": 50,
+    "train": 40,
+    "val": 10
+  },
+  "eating": {
+    "total": 50,
+    "train": 40,
+    "val": 10
+  },
+  "interacting_with_phone": {
+    "total": 50,
+    "train": 40,
+    "val": 10
+  },
+  "no_violation": {
+    "total": 605,
+    "train": 484,
+    "val": 121
+  },
+  "reading_newspaper": {
+    "total": 50,
+    "train": 40,
+    "val": 10
+  },
+  "talking_on_phone": {
+    "total": 50,
+    "train": 40,
+    "val": 10
+  },
+  "working_on_laptop": {
+    "total": 50,
+    "train": 40,
+    "val": 10
+  }
+}

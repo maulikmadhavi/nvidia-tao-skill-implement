@@ -1,0 +1,8 @@
+true\pred,drinking,eating,interacting_with_phone,no_violation,reading_newspaper,talking_on_phone,working_on_laptop
+drinking,10,0,0,0,0,0,0
+eating,0,10,0,0,0,0,0
+interacting_with_phone,0,0,10,0,0,0,0
+no_violation,0,0,0,121,0,0,0
+reading_newspaper,0,0,0,0,10,0,0
+talking_on_phone,0,0,0,0,0,10,0
+working_on_laptop,0,0,1,1,0,0,8
