@@ -106,7 +106,11 @@ phase_preflight() {
     else
         warn "model snapshot NOT found: $MODEL_DIR  (download it: hf download nvidia/Cosmos-Embed1-224p --local-dir \"$MODEL_DIR\", or set MODEL_DIR=/path/to/your/Cosmos-Embed1-224p)"; fail=1
     fi
-    [[ -d "$HF_CACHE" ]] && info "hf_cache OK: $HF_CACHE" || warn "hf_cache dir $HF_CACHE missing — will be created empty on first run"
+    if compgen -G "$HF_CACHE/models--bert-base-uncased/snapshots/*/config.json" >/dev/null 2>&1; then
+        info "hf_cache OK (bert-base-uncased staged): $HF_CACHE"
+    else
+        warn "bert-base-uncased NOT in $HF_CACHE — the offline Q-Former load will fail. Stage it: hf download bert-base-uncased --cache-dir \"$HF_CACHE\"  (or just run ./download_model.sh)"; fail=1
+    fi
 
     if have docker; then
         if docker image inspect "$IMAGE" >/dev/null 2>&1; then
