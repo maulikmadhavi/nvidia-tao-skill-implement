@@ -9,16 +9,21 @@
 # Paths default to the sibling-experiment layout but are overridable via env vars
 # (the Windows D:\ defaults won't exist on a POSIX host — set these to match yours):
 #   DATA_ROOT   dataset root (shortclips_pos_neg)
-#   SHARED      driving-violations workspace holding model/ and hf_cache/
+#   SHARED      base for the default model/hf_cache locations (driving-violations workspace)
+#   MODEL_DIR   the Cosmos-Embed1-224p snapshot dir   (default: $SHARED/model/Cosmos-Embed1-224p)
+#   HF_CACHE    HF cache dir                          (default: $SHARED/hf_cache)
 #   IMAGE       offline image tag
 #
+# Point MODEL_DIR straight at wherever you downloaded the snapshot (e.g. an
+# existing /data HF cache) — no need to shoehorn it under $SHARED/model.
+#
 # Mounts:
-#   /data         dataset root (shortclips_pos_neg)      ro
-#   /splits       workspace/splits (metadata + prompts)  ro
-#   /results      workspace/results                      rw
-#   /model        shared Cosmos-Embed1-224p snapshot     ro
-#   /hf_cache     shared HF cache                         rw
-#   /exp/scripts  this experiment's scripts              ro
+#   /data                      dataset root (shortclips_pos_neg)   ro
+#   /splits                    workspace/splits (metadata+prompts) ro
+#   /results                   workspace/results                   rw
+#   /model/Cosmos-Embed1-224p  the model snapshot (MODEL_DIR)      ro
+#   /hf_cache                  HF cache (HF_CACHE)                 rw
+#   /exp/scripts               this experiment's scripts           ro
 
 set -euo pipefail
 
@@ -35,6 +40,8 @@ EXP="$(dirname "$SCRIPT_DIR")"
 IMAGE="${IMAGE:-cosmos-embed-offline:7.0.1}"
 DATA_ROOT="${DATA_ROOT:-/data/research_data/driving_violation/shortclips_pos_neg/shortclips_pos_neg}"
 SHARED="${SHARED:-$(dirname "$EXP")/cosmos-embed1-driving-violations/workspace}"
+MODEL_DIR="${MODEL_DIR:-$SHARED/model/Cosmos-Embed1-224p}"
+HF_CACHE="${HF_CACHE:-$SHARED/hf_cache}"
 
 docker_args=(
     run --rm --gpus all --ipc=host --shm-size=16g
@@ -42,8 +49,8 @@ docker_args=(
     -v "${DATA_ROOT}:/data:ro"
     -v "${EXP}/workspace/splits:/splits:ro"
     -v "${EXP}/workspace/results:/results"
-    -v "${SHARED}/model:/model:ro"
-    -v "${SHARED}/hf_cache:/hf_cache"
+    -v "${MODEL_DIR}:/model/Cosmos-Embed1-224p:ro"
+    -v "${HF_CACHE}:/hf_cache"
     -v "${EXP}/scripts:/exp/scripts:ro"
     "$IMAGE" bash -lc "$CMD"
 )

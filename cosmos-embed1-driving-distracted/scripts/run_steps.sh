@@ -25,7 +25,9 @@
 # Env knobs (all optional):
 #   IMAGE       override the docker image (passed through to run_container.sh)
 #   DATA_ROOT   dataset root (shortclips_pos_neg)   [also consumed by run_container.sh]
-#   SHARED      driving-violations workspace holding model/ and hf_cache/  [run_container.sh]
+#   SHARED      base for the default model/hf_cache locations              [run_container.sh]
+#   MODEL_DIR   Cosmos-Embed1-224p snapshot dir    (default: $SHARED/model/Cosmos-Embed1-224p)
+#   HF_CACHE    HF cache dir                       (default: $SHARED/hf_cache)
 #   VAL_FRAC    val fraction for the split          (default: 0.2)
 #   SEED        split seed                           (default: 0)
 #   SPLIT       which split zero-shot reports on     (default: val; val|train|all)
@@ -45,6 +47,8 @@ RUN_CONTAINER="$SCRIPT_DIR/run_container.sh"
 IMAGE="${IMAGE:-cosmos-embed-offline:7.0.1}"
 DATA_ROOT="${DATA_ROOT:-/data/research_data/driving_violation/shortclips_pos_neg/shortclips_pos_neg}"
 SHARED="${SHARED:-$(dirname "$EXP")/cosmos-embed1-driving-violations/workspace}"
+MODEL_DIR="${MODEL_DIR:-$SHARED/model/Cosmos-Embed1-224p}"
+HF_CACHE="${HF_CACHE:-$SHARED/hf_cache}"
 VAL_FRAC="${VAL_FRAC:-0.2}"
 SEED="${SEED:-0}"
 SPLIT="${SPLIT:-val}"
@@ -70,7 +74,7 @@ incontainer() {
     local cmd="$1"
     printf '%s+ run_container.sh %s%s\n' "$c_yellow" "$cmd" "$c_reset"
     [[ -n "${DRY_RUN:-}" ]] && return 0
-    IMAGE="$IMAGE" DATA_ROOT="$DATA_ROOT" SHARED="$SHARED" "$RUN_CONTAINER" "$cmd"
+    IMAGE="$IMAGE" DATA_ROOT="$DATA_ROOT" SHARED="$SHARED" MODEL_DIR="$MODEL_DIR" HF_CACHE="$HF_CACHE" "$RUN_CONTAINER" "$cmd"
 }
 
 have() { command -v "$1" >/dev/null 2>&1; }
@@ -94,13 +98,15 @@ phase_preflight() {
         warn "dataset root NOT found: $DATA_ROOT  (set DATA_ROOT=/path/to/shortclips_pos_neg/shortclips_pos_neg)"; fail=1
     fi
 
-    # shared model snapshot + hf cache (reused from the driving-violations workspace)
-    if [[ -d "$SHARED/model" ]]; then
-        info "shared model snapshot OK: $SHARED/model"
+    # model snapshot + hf cache (MODEL_DIR/HF_CACHE, defaulting under $SHARED)
+    if [[ -f "$MODEL_DIR/config.json" ]]; then
+        info "model snapshot OK: $MODEL_DIR"
+    elif [[ -d "$MODEL_DIR" ]]; then
+        warn "MODEL_DIR exists but has no config.json: $MODEL_DIR  (incomplete download? expect the full nvidia/Cosmos-Embed1-224p snapshot here)"; fail=1
     else
-        warn "shared model dir NOT found: $SHARED/model  (set SHARED=/path/to/cosmos-embed1-driving-violations/workspace, or point it at any dir holding the Cosmos-Embed1-224p snapshot under model/)"; fail=1
+        warn "model snapshot NOT found: $MODEL_DIR  (download it: hf download nvidia/Cosmos-Embed1-224p --local-dir \"$MODEL_DIR\", or set MODEL_DIR=/path/to/your/Cosmos-Embed1-224p)"; fail=1
     fi
-    [[ -d "$SHARED/hf_cache" ]] && info "shared hf_cache OK: $SHARED/hf_cache" || warn "hf_cache dir $SHARED/hf_cache missing — will be created empty on first run"
+    [[ -d "$HF_CACHE" ]] && info "hf_cache OK: $HF_CACHE" || warn "hf_cache dir $HF_CACHE missing — will be created empty on first run"
 
     if have docker; then
         if docker image inspect "$IMAGE" >/dev/null 2>&1; then
@@ -123,7 +129,7 @@ phase_preflight() {
         fi
     fi
 
-    host mkdir -p "$WS/splits" "$WS/results/baseline"
+    host mkdir -p "$WS/splits" "$WS/results/baseline" "$HF_CACHE"
 
     [[ $fail -eq 0 ]] && info "preflight OK" || die "preflight found blocking issues (see [!] above)"
 }
